@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QCARInfo>
+    <TargetSet version="36.0" toolVersion="v6.2.15">
+        <ModelTarget name="Samsungcharger" targetId="24509ed0aaab416ebc599d5bea98c8f9" version="13.0" toolVersion="v6.2.15" bbox="-0.025078 -0.015065 -0.032065 0.025065 0.015047 0.102065" trackingMode="car" upVector="0.0 1.0 0.0" optimizeTrackingFor="default" realisticTextures="no" />
+    </TargetSet>
+    <Assembly name="Samsungcharger" assemblyId="06424d18263d45aaae5a5cf404a64712">
+        <Part name="Samsungcharger" translation="0 0 0" rotation="AD: 0 0 1 0" />
+        <EntryPoint name="(none)" trained="yes" />
+    </Assembly>
+</QCARInfo>
