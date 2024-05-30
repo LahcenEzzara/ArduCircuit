@@ -6,6 +6,9 @@ TagManager:
   tags:
   - NextButton
   - ImageFrame
+  - PrevButton
+  - VideoPlayer
+  - TextStep
   layers:
   - Default
   - TransparentFX
