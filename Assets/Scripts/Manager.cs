@@ -8,9 +8,10 @@ using TMPro;
 public class Manager : MonoBehaviour
 {
   int index = 0;
-  public List<Texture2D> images;
+  bool firstTimeDetected = true;
+  // public List<Texture2D> images;
   public List<VideoClip> videos;
-  public List<string> stepList = new List<string> { "Step 1", "Step 2", "Step 3" };
+  public List<string> stepList;
   public Button nextButton;
 
   public Button prevButton;
@@ -18,8 +19,27 @@ public class Manager : MonoBehaviour
   public TextMeshProUGUI textStep;
   public VideoPlayer videoPlayer;
 
+  public void onModelDetected()
+  {
+    Debug.Log("Model Detected");
+    if (firstTimeDetected)
+    {
+      firstTimeDetected = false;
+      videoPlayer.clip = videos[index];
+    }
+    videoPlayer.Play();
+  }
+
+  public void onModelLost()
+  {
+    Debug.Log("Model Lost");
+    videoPlayer.Stop();
+  }
+
   void Start()
   {
+    stepList = new List<string> { "Connect the other end of the resistor using jumper wire", "Connect the resistor to digital pin 13 of the Arduino", "Connect the short leg of the LED (cathode) using a jumper wire", "Connect the LED to the GND (Ground) pin of the Arduino", "Demo" };
+
     textStep = GameObject.FindWithTag("TextStep").GetComponent<TextMeshProUGUI>();
     textStep.text = stepList[index];
 
@@ -48,35 +68,43 @@ public class Manager : MonoBehaviour
         prevVideo();
         Debug.Log("Prev Button Clicked");
       });
+      prevButton.interactable = false;
     }
     else
     {
       Debug.LogError("Prev Button not found");
     }
 
-    for (int i = 1; i <= 2; i++)
-    {
-      Texture2D texture = Resources.Load<Texture2D>("Images/capture" + i);
-      images.Add(texture);
-    }
+    // for (int i = 1; i <= 2; i++)
+    // {
+    //   Texture2D texture = Resources.Load<Texture2D>("Images/capture" + i);
+    //   images.Add(texture);
+    // }
 
-    for (int i = 1; i <= 3; i++)
+    for (int i = 1; i <= 5; i++)
     {
       VideoClip video = Resources.Load<VideoClip>("Videos/" + i);
       videos.Add(video);
     }
 
-    GameObject imageGameObject = GameObject.FindWithTag("ImageFrame");
-    imageFrame = imageGameObject?.GetComponent<RawImage>(); // Add null check here
+    Debug.Log(videos.Count);
 
-    if (imageFrame != null)
+    for (int i = 0; i < 5; i++)
     {
-      Debug.Log("ImageFrame found");
+      Debug.Log(videos[i].name);
     }
-    else
-    {
-      Debug.LogError("ImageFrame not found");
-    }
+
+    // GameObject imageGameObject = GameObject.FindWithTag("ImageFrame");
+    // imageFrame = imageGameObject?.GetComponent<RawImage>(); // Add null check here
+
+    // if (imageFrame != null)
+    // {
+    //   Debug.Log("ImageFrame found");
+    // }
+    // else
+    // {
+    //   Debug.LogError("ImageFrame not found");
+    // }
 
 
     GameObject videoPlayerGameObject = GameObject.FindWithTag("VideoPlayer");
@@ -92,25 +120,25 @@ public class Manager : MonoBehaviour
     }
   }
 
-  void nextImage()
-  {
-    index++;
-    if (index >= images.Count)
-    {
-      index = 0;
-    }
-    imageFrame.texture = images[index];
-  }
+  // void nextImage()
+  // {
+  //   index++;
+  //   if (index >= images.Count)
+  //   {
+  //     index = 0;
+  //   }
+  //   imageFrame.texture = images[index];
+  // }
 
-  void prevImage()
-  {
-    index--;
-    if (index < 0)
-    {
-      index = images.Count - 1;
-    }
-    imageFrame.texture = images[index];
-  }
+  // void prevImage()
+  // {
+  //   index--;
+  //   if (index < 0)
+  //   {
+  //     index = images.Count - 1;
+  //   }
+  //   imageFrame.texture = images[index];
+  // }
 
   void nextVideo()
   {
@@ -119,9 +147,8 @@ public class Manager : MonoBehaviour
     {
       index = 0;
     }
-    textStep.text = stepList[index];
-    videoPlayer.clip = videos[index];
-    videoPlayer.Play();
+    checkButtonState();
+    switchVideo();
   }
 
   void prevVideo()
@@ -131,6 +158,34 @@ public class Manager : MonoBehaviour
     {
       index = videos.Count - 1;
     }
+    checkButtonState();
+    switchVideo();
+  }
+
+  void checkButtonState()
+  {
+    if (index == 0)
+    {
+      prevButton.interactable = false;
+    }
+    else
+    {
+      prevButton.interactable = true;
+    }
+
+    if (index == videos.Count - 1)
+    {
+      nextButton.interactable = false;
+    }
+    else
+    {
+      nextButton.interactable = true;
+    }
+  }
+
+  void switchVideo()
+  {
+    videoPlayer.Stop();
     textStep.text = stepList[index];
     videoPlayer.clip = videos[index];
     videoPlayer.Play();

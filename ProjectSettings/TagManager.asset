@@ -9,6 +9,7 @@ TagManager:
   - PrevButton
   - VideoPlayer
   - TextStep
+  - ModelTarget
   layers:
   - Default
   - TransparentFX
