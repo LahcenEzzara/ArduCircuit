@@ -40,10 +40,11 @@ public class Manager : MonoBehaviour
 
   void Start()
   {
+    Debug.Log("Manager Script Started");
     arrow = GameObject.FindWithTag("Arrow").GetComponent<SpriteRenderer>();
-    arrow.enabled = false;
     // move arrow sprite left and right
     LeanTween.moveX(arrow.gameObject, arrow.transform.position.x + 0.1f, 0.5f).setEaseInOutSine().setLoopPingPong();
+    arrow.enabled = false;
 
     textStep = GameObject.FindWithTag("TextStep").GetComponent<TextMeshProUGUI>();
     textStep.text = stepList[index];
@@ -183,10 +184,12 @@ public class Manager : MonoBehaviour
 
     if (index == 1)
     {
+      Debug.Log("Arrow Enabled");
       arrow.enabled = true;
     }
     else
     {
+      Debug.Log("Arrow Disabled");
       arrow.enabled = false;
     }
   }
@@ -197,6 +200,15 @@ public class Manager : MonoBehaviour
     textStep.text = stepList[index];
     videoPlayer.clip = videos[index];
     videoPlayer.Play();
+  }
+
+  void FixedUpdate()
+  {
+    arrow.enabled = false;
+    if (index == 1)
+    {
+      arrow.enabled = true;
+    }
   }
 
 }
