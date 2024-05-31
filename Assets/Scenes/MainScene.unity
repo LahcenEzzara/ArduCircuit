@@ -449,16 +449,16 @@ MonoBehaviour:
   PreviewVisible: 1
   RuntimeOcclusion: 0
   RuntimeCollider: 0
-  mTrackableName: Samsungcharger
+  mTrackableName: arduinouno
   mInitializedInEditor: 1
-  mDataSetPath: Vuforia/Samsungcharger.xml
-  mBaseSize: 0.050143
-  mAspectRatioXY: 0.6005225
-  mAspectRatioXZ: 2.6749496
+  mDataSetPath: Vuforia/arduinouno.xml
+  mBaseSize: 0.053404
+  mAspectRatioXY: 0.28585875
+  mAspectRatioXZ: 1.4038649
   mShowBoundingBox: 0
   mOverrideSnappingPose: 0
-  mBBoxMin: {x: -0.025078, y: -0.015065, z: -0.032065}
-  mBBoxMax: {x: 0.025065, y: 0.015047, z: 0.102065}
+  mBBoxMin: {x: -0.00003, y: -0.004206, z: -0.068614}
+  mBBoxMax: {x: 0.053374, y: 0.01106, z: 0.006358}
   mPreviewImage: {fileID: 0}
   m3DGuideViewModel: {fileID: 0}
   m2DGuideViewImage: {fileID: 0}
@@ -466,8 +466,8 @@ MonoBehaviour:
   m2DGuideViewMaterial: {fileID: 0}
   m3DGuideViewMaterial: {fileID: 0}
   mLength: 0.6
-  mWidth: 0.36031353
-  mHeight: 1.6049699
+  mWidth: 0.17151526
+  mHeight: 0.84231895
   m2DGuideViewMaterials: []
   m3DGuideViewMaterials: []
   mSelectedGuideView: 
@@ -510,8 +510,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mObserverBehaviour: {fileID: 409979906}
   mHiddenRoot: {fileID: 0}
-  mTargetName: Samsungcharger
-  mDatasetName: Vuforia/Samsungcharger.xml
+  mTargetName: arduinouno
+  mDatasetName: Vuforia/arduinouno.xml
   mCastedBehaviour: {fileID: 409979906}
   mModelTargetPreview: {fileID: 0}
 --- !u!1 &426397271
