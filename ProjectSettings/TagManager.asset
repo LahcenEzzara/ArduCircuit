@@ -10,6 +10,8 @@ TagManager:
   - VideoPlayer
   - TextStep
   - ModelTarget
+  - StartButton
+  - ExitButton
   layers:
   - Default
   - TransparentFX
