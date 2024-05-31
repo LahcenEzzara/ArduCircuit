@@ -13,6 +13,8 @@ TagManager:
   - StartButton
   - ExitButton
   - Arrow
+  - ArrowPin
+  - ArrowGnd
   layers:
   - Default
   - TransparentFX

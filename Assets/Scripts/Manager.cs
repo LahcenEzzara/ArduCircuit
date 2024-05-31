@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using TMPro;
+using Vuforia;
 
 public class Manager : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class Manager : MonoBehaviour
   // public List<Texture2D> images;
   readonly List<VideoClip> videos = new();
   readonly List<string> stepList = new() { "Connect the other end of the resistor using jumper wire", "Connect the resistor to digital pin 13 of the Arduino", "Connect the short leg of the LED (cathode) using a jumper wire", "Connect the LED to the GND (Ground) pin of the Arduino", "Demo" };
-  public SpriteRenderer arrow;
+  public SpriteRenderer arrowPin;
+  public SpriteRenderer arrowGnd;
   public Button nextButton;
   public Button prevButton;
   public RawImage imageFrame;
   public TextMeshProUGUI textStep;
   public VideoPlayer videoPlayer;
+
+  public ObserverBehaviour modelTargetBehaviour;
 
   public void OnModelDetected()
   {
@@ -38,13 +42,33 @@ public class Manager : MonoBehaviour
     }
   }
 
+  void OnTargetStatusChanged(ObserverBehaviour behaviour, TargetStatus targetStatus)
+  {
+    Debug.Log("Target Status Changed");
+    if (targetStatus.Status == Status.TRACKED)
+    {
+      OnModelDetected();
+    }
+    else
+    {
+      OnModelLost();
+    }
+  }
+
   void Start()
   {
+    modelTargetBehaviour = GameObject.FindWithTag("ModelTarget").GetComponent<ObserverBehaviour>();
+    modelTargetBehaviour.OnTargetStatusChanged += OnTargetStatusChanged;
+
     Debug.Log("Manager Script Started");
-    arrow = GameObject.FindWithTag("Arrow").GetComponent<SpriteRenderer>();
+    arrowPin = GameObject.FindWithTag("ArrowPin").GetComponent<SpriteRenderer>();
+    arrowGnd = GameObject.FindWithTag("ArrowGnd").GetComponent<SpriteRenderer>();
     // move arrow sprite left and right
-    LeanTween.moveX(arrow.gameObject, arrow.transform.position.x + 0.1f, 0.5f).setEaseInOutSine().setLoopPingPong();
-    arrow.enabled = false;
+    LeanTween.moveX(arrowPin.gameObject, arrowPin.transform.position.x + 0.1f, 0.5f).setEaseInOutSine().setLoopPingPong();
+    LeanTween.moveX(arrowGnd.gameObject, arrowGnd.transform.position.x - 0.1f, 0.5f).setEaseInOutSine().setLoopPingPong();
+
+    arrowPin.enabled = false;
+    arrowGnd.enabled = false;
 
     textStep = GameObject.FindWithTag("TextStep").GetComponent<TextMeshProUGUI>();
     textStep.text = stepList[index];
@@ -185,12 +209,21 @@ public class Manager : MonoBehaviour
     if (index == 1)
     {
       Debug.Log("Arrow Enabled");
-      arrow.enabled = true;
+      arrowPin.enabled = true;
     }
     else
     {
       Debug.Log("Arrow Disabled");
-      arrow.enabled = false;
+      arrowPin.enabled = false;
+    }
+
+    if (index == 3)
+    {
+      arrowGnd.enabled = true;
+    }
+    else
+    {
+      arrowGnd.enabled = false;
     }
   }
 
@@ -204,10 +237,22 @@ public class Manager : MonoBehaviour
 
   void FixedUpdate()
   {
-    arrow.enabled = false;
+    if (arrowPin == null || arrowGnd == null)
+    {
+      return;
+    }
+
+    arrowPin.enabled = false;
+    arrowGnd.enabled = false;
+
     if (index == 1)
     {
-      arrow.enabled = true;
+      arrowPin.enabled = true;
+    }
+
+    if (index == 3)
+    {
+      arrowGnd.enabled = true;
     }
   }
 
