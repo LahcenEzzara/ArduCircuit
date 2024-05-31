@@ -2,17 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public void ExitGame()
-    {
-        Application.Quit();
-        Debug.Log("Game Closed");
-    }
+  public Button startButton;
+  public Button exitButton;
 
-    public void StartGame()
+  string sceneName = "MainScene";
+
+  void Start()
+  {
+    startButton = GameObject.FindWithTag("StartButton").GetComponent<Button>();
+    exitButton = GameObject.FindWithTag("ExitButton").GetComponent<Button>();
+
+    startButton.onClick.AddListener(() =>
     {
-        SceneManager.LoadScene("good_on_pc");
-    }
+      StartGame();
+    });
+
+    exitButton.onClick.AddListener(() =>
+    {
+      ExitGame();
+    });
+
+  }
+
+  public void ExitGame()
+  {
+    Application.Quit();
+    Debug.Log("Game Closed");
+  }
+
+  public void StartGame()
+  {
+    SceneManager.LoadScene(sceneName);
+  }
 }

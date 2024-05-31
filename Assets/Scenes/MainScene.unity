@@ -389,25 +389,25 @@ MonoBehaviour:
   PreviewVisible: 1
   RuntimeOcclusion: 0
   RuntimeCollider: 0
-  mTrackableName: Samsungcharger
+  mTrackableName: arduinouno
   mInitializedInEditor: 1
-  mDataSetPath: Vuforia/Samsungcharger.xml
-  mBaseSize: 0.050143
-  mAspectRatioXY: 0.6005225
-  mAspectRatioXZ: 2.6749496
+  mDataSetPath: Vuforia/arduinouno.xml
+  mBaseSize: 0.053404
+  mAspectRatioXY: 0.28585875
+  mAspectRatioXZ: 1.4038649
   mShowBoundingBox: 0
   mOverrideSnappingPose: 0
-  mBBoxMin: {x: -0.025078, y: -0.015065, z: -0.032065}
-  mBBoxMax: {x: 0.025065, y: 0.015047, z: 0.102065}
+  mBBoxMin: {x: -0.00003, y: -0.004206, z: -0.068614}
+  mBBoxMax: {x: 0.053374, y: 0.01106, z: 0.006358}
   mPreviewImage: {fileID: 0}
   m3DGuideViewModel: {fileID: 0}
   m2DGuideViewImage: {fileID: 0}
   mGuideViewDisplayMode: 0
   m2DGuideViewMaterial: {fileID: 0}
   m3DGuideViewMaterial: {fileID: 0}
-  mLength: 0.5
-  mWidth: 0.30026126
-  mHeight: 1.3374748
+  mLength: 0.6
+  mWidth: 0.17151526
+  mHeight: 0.84231895
   m2DGuideViewMaterials: []
   m3DGuideViewMaterials: []
   mSelectedGuideView: 
@@ -448,8 +448,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mObserverBehaviour: {fileID: 409979906}
   mHiddenRoot: {fileID: 0}
-  mTargetName: Samsungcharger
-  mDatasetName: Vuforia/Samsungcharger.xml
+  mTargetName: arduinouno
+  mDatasetName: Vuforia/arduinouno.xml
   mCastedBehaviour: {fileID: 409979906}
   mModelTargetPreview: {fileID: 0}
 --- !u!1 &426397271
@@ -1337,7 +1337,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578899498}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0, z: -0.178}
   m_LocalScale: {x: 0.004, y: 0.004, z: 0.004}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1347,7 +1347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.799, y: 0.001}
+  m_AnchoredPosition: {x: 1.025, y: 0.001}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1578899500
