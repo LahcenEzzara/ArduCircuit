@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,16 +9,16 @@ public class Manager : MonoBehaviour
   int index = 0;
   bool firstTimeDetected = true;
   // public List<Texture2D> images;
-  public List<VideoClip> videos;
-  public List<string> stepList;
+  readonly List<VideoClip> videos = new();
+  readonly List<string> stepList = new() { "Connect the other end of the resistor using jumper wire", "Connect the resistor to digital pin 13 of the Arduino", "Connect the short leg of the LED (cathode) using a jumper wire", "Connect the LED to the GND (Ground) pin of the Arduino", "Demo" };
+  public SpriteRenderer arrow;
   public Button nextButton;
-
   public Button prevButton;
   public RawImage imageFrame;
   public TextMeshProUGUI textStep;
   public VideoPlayer videoPlayer;
 
-  public void onModelDetected()
+  public void OnModelDetected()
   {
     Debug.Log("Model Detected");
     if (firstTimeDetected)
@@ -30,15 +29,21 @@ public class Manager : MonoBehaviour
     videoPlayer.Play();
   }
 
-  public void onModelLost()
+  public void OnModelLost()
   {
     Debug.Log("Model Lost");
-    videoPlayer.Stop();
+    if (!firstTimeDetected)
+    {
+      videoPlayer.Pause();
+    }
   }
 
   void Start()
   {
-    stepList = new List<string> { "Connect the other end of the resistor using jumper wire", "Connect the resistor to digital pin 13 of the Arduino", "Connect the short leg of the LED (cathode) using a jumper wire", "Connect the LED to the GND (Ground) pin of the Arduino", "Demo" };
+    arrow = GameObject.FindWithTag("Arrow").GetComponent<SpriteRenderer>();
+    arrow.enabled = false;
+    // move arrow sprite left and right
+    LeanTween.moveX(arrow.gameObject, arrow.transform.position.x + 0.1f, 0.5f).setEaseInOutSine().setLoopPingPong();
 
     textStep = GameObject.FindWithTag("TextStep").GetComponent<TextMeshProUGUI>();
     textStep.text = stepList[index];
@@ -46,13 +51,13 @@ public class Manager : MonoBehaviour
     GameObject nextButtonGameObject = GameObject.FindWithTag("NextButton");
     GameObject prevButtonGameObject = GameObject.FindWithTag("PrevButton");
 
-    nextButton = nextButtonGameObject?.GetComponent<Button>();
-    prevButton = prevButtonGameObject?.GetComponent<Button>();
+    nextButton = nextButtonGameObject.GetComponent<Button>();
+    prevButton = prevButtonGameObject.GetComponent<Button>();
     if (nextButton != null)
     {
       nextButton.onClick.AddListener(() =>
       {
-        nextVideo();
+        NextVideo();
         Debug.Log("Next Button Clicked");
       });
     }
@@ -65,7 +70,7 @@ public class Manager : MonoBehaviour
     {
       prevButton.onClick.AddListener(() =>
       {
-        prevVideo();
+        PrevVideo();
         Debug.Log("Prev Button Clicked");
       });
       prevButton.interactable = false;
@@ -75,24 +80,18 @@ public class Manager : MonoBehaviour
       Debug.LogError("Prev Button not found");
     }
 
-    // for (int i = 1; i <= 2; i++)
-    // {
-    //   Texture2D texture = Resources.Load<Texture2D>("Images/capture" + i);
-    //   images.Add(texture);
-    // }
-
     for (int i = 1; i <= 5; i++)
     {
       VideoClip video = Resources.Load<VideoClip>("Videos/" + i);
       videos.Add(video);
     }
 
-    Debug.Log(videos.Count);
+    // Debug.Log(videos.Count);
 
-    for (int i = 0; i < 5; i++)
-    {
-      Debug.Log(videos[i].name);
-    }
+    // for (int i = 0; i < 5; i++)
+    // {
+    //   Debug.Log(videos[i].name);
+    // }
 
     // GameObject imageGameObject = GameObject.FindWithTag("ImageFrame");
     // imageFrame = imageGameObject?.GetComponent<RawImage>(); // Add null check here
@@ -108,7 +107,7 @@ public class Manager : MonoBehaviour
 
 
     GameObject videoPlayerGameObject = GameObject.FindWithTag("VideoPlayer");
-    videoPlayer = videoPlayerGameObject?.GetComponent<VideoPlayer>(); // Add null check here
+    videoPlayer = videoPlayerGameObject.GetComponent<VideoPlayer>(); // Add null check here
 
     if (videoPlayer != null)
     {
@@ -140,29 +139,29 @@ public class Manager : MonoBehaviour
   //   imageFrame.texture = images[index];
   // }
 
-  void nextVideo()
+  void NextVideo()
   {
     index++;
     if (index >= videos.Count)
     {
       index = 0;
     }
-    checkButtonState();
-    switchVideo();
+    CheckButtonState();
+    SwitchVideo();
   }
 
-  void prevVideo()
+  void PrevVideo()
   {
     index--;
     if (index < 0)
     {
       index = videos.Count - 1;
     }
-    checkButtonState();
-    switchVideo();
+    CheckButtonState();
+    SwitchVideo();
   }
 
-  void checkButtonState()
+  void CheckButtonState()
   {
     if (index == 0)
     {
@@ -181,9 +180,18 @@ public class Manager : MonoBehaviour
     {
       nextButton.interactable = true;
     }
+
+    if (index == 1)
+    {
+      arrow.enabled = true;
+    }
+    else
+    {
+      arrow.enabled = false;
+    }
   }
 
-  void switchVideo()
+  void SwitchVideo()
   {
     videoPlayer.Stop();
     textStep.text = stepList[index];
@@ -191,9 +199,4 @@ public class Manager : MonoBehaviour
     videoPlayer.Play();
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-
-  }
 }

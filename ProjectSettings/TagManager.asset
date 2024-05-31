@@ -12,6 +12,7 @@ TagManager:
   - ModelTarget
   - StartButton
   - ExitButton
+  - Arrow
   layers:
   - Default
   - TransparentFX
